@@ -1,0 +1,13 @@
+1.      s2 = Registration("fga" , "asd12") #ValueError: Login must include at least one ' @ '
+        s2 = Registration("translate@gmail.com" , "as1SNdf") #norm
+
+        s2.login = "asdsa12asd."
+        # ValueError: Login must include at least one ' @ '
+        s2.login = "asdsa12@asd"
+        #ValueError: Login must include at least one ' . '
+
+2.      s2.password = "asSdf" #Пароль должен содержать хотя бы одну цифру
+        s2.password = "asSSAd1f" # Norm
+        s2.password = "monkey" #ValueError: Ваш пароль содержиться в списке самых легких
+        s2.secret , "любой другой пароль"
+        s2.secret , "self.password" # 'U r hacked Pentagon'
