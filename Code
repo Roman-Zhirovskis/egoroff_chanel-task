@@ -1,0 +1,90 @@
+from string import digits
+import string
+
+
+class Registration:
+    def __init__(self, login, password):
+        self.login = login
+        self.password = password
+        self.__secret = "U r hacked Pentagon"
+
+    @property
+    def secret(self):
+        s = input("Input ur password")
+        if s == self.password:
+            return self.__secret
+        else:
+            raise ValueError("Access closed")
+
+    @property
+    def login(self):
+        # the login getter
+        return self.__login
+
+    @login.setter
+    def login(self, new_login):
+        # loggin setter
+        if new_login.count("@") != 1:
+            raise ValueError("Login must include at least one ' @ '")
+        if "." not in new_login:
+            raise ValueError("Login must include at least one ' . '")
+
+        self.__login = new_login
+
+    @staticmethod
+    def is_include_digit(password):
+        # chek on including digit in the pass
+        for digit in digits:
+            if digit in password:
+                return True
+        return False
+
+    @staticmethod
+    def is_include_all_register(password):
+        # chek on up or low register in pass
+        lower_count = sum(map(str.isupper, password))
+        if lower_count > 1:
+            return True
+        return False
+
+    @staticmethod
+    def is_include_only_latin(password):
+        # chek on latin aplph in
+        for i in password:
+            if i not in string.ascii_lowercase and i not in string.ascii_uppercase and i not in digits:
+                return False
+        return True
+
+    @staticmethod
+    # chek our pass in popular easy hacking pass
+    def easy_password(new_password):
+        with open(r"C:\Users\tessl\PycharmProjects\pythonProject9\estpass.txt") as inf:
+            passwords = inf.read().split()
+            for password in passwords:
+                if new_password == password:
+                    return False
+            return True
+
+    @property
+    def password(self):
+        # the pass getter
+        return self.__password
+
+    @password.setter
+    def password(self, new_password):
+        # print("setter password called")
+        if not Registration.easy_password(new_password):
+            raise ValueError('Ваш пароль содержиться в списке самых легких')
+        if not isinstance(new_password, str):
+            raise TypeError("The password must be a string")
+        if 4 > len(new_password) > 12:
+            raise ValueError('The password len must be more than 4 symbol '
+                             'and less than 12 symbol')
+        if not Registration.is_include_digit(new_password):
+            raise ValueError('Пароль должен содержать хотя бы одну цифру')
+        if not Registration.is_include_all_register(new_password):
+            raise ValueError('Пароль должен содержать хотя бы 2 заглавные буквы')
+        if not Registration.is_include_only_latin(new_password):
+            raise ValueError('Пароль должен содержать только латинский алфавит')
+
+        self.__password = new_password
